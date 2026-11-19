@@ -35,11 +35,11 @@ def test_get_unknown_pokemon_returns_404(pokeapi):
 
 
 @pytest.mark.parametrize("name, expected_id", [
-    ('ditto', 132),
-    ('eevee', 133),
-    ('vaporeon', 134),
-    ('flareon', 136),
-    ('porygon', 137)
+    ("ditto", 132),
+    ("eevee", 133),
+    ("vaporeon", 134),
+    ("flareon", 136),
+    ("porygon", 137)
 ])
 def test_get_pokemons_by_name_returns_correct_ids(pokeapi, name, expected_id):
     response = pokeapi.get_pokemon(name)

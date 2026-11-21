@@ -26,6 +26,13 @@ def test_get_pokemon_by_id_returns_correct_name(pokeapi):
     assert body["id"] == 25
 
 
+def test_get_pokemon_returns_json_content_type(pokeapi):
+    response = pokeapi.get_pokemon("bulbasaur")
+
+    assert response.status_code == 200
+    assert response.headers["Content-Type"].startswith("application/json")
+
+
 def test_get_unknown_pokemon_returns_404(pokeapi):
     response = pokeapi.get_pokemon("definitely-not-a-pokemon")
 

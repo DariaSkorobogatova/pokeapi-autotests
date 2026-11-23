@@ -67,4 +67,15 @@ def test_time_to_first_byte_get_pokemon_by_name(pokeapi):
     )
 
 
+def test_get_pokemon_type_by_name(pokeapi):
+    response = pokeapi.get_pokemon("pikachu")
+
+    assert response.status_code == 200
+    body = response.json()
+    # перебираем все типы на случай, если их у покемона несколько
+    type_names = [item["type"]["name"] for item in body["types"]]
+    assert "electric" in type_names
+
+
+
 

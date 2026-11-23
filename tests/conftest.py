@@ -1,10 +1,7 @@
-import os
-
 import pytest
 
 from api.pokeapi_client import PokeApiClient
-
-BASE_URL = os.getenv("POKEAPI_BASE_URL", "https://pokeapi.co/api/v2")
+from config import BASE_URL
 
 
 @pytest.fixture(scope="session")

@@ -1,7 +1,6 @@
 """Тесты эндпоинта /pokemon/{name_or_id}."""
 import pytest
-
-MAX_RESPONSE_TIME_SECONDS = 2
+from config import MAX_RESPONSE_TIME_SECONDS
 
 
 def test_get_pokemon_by_name_returns_200(pokeapi):

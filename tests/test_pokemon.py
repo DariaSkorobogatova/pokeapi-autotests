@@ -64,7 +64,7 @@ def test_time_to_first_byte_get_pokemon_by_name(pokeapi):
     assert response.status_code == 200
     elapsed = response.elapsed.total_seconds()
     assert elapsed < MAX_RESPONSE_TIME_SECONDS, (
-        f"Ответ занял {elapsed} сек., допустимо до {MAX_RESPONSE_TIME_SECONDS} сек."
+        f"Ответ занял {elapsed:.2f} сек., допустимо до {MAX_RESPONSE_TIME_SECONDS} сек."
     )
 
 

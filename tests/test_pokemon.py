@@ -1,6 +1,8 @@
 """Тесты эндпоинта /pokemon/{name_or_id}."""
 import pytest
 
+MAX_RESPONSE_TIME_SECONDS = 2
+
 
 def test_get_pokemon_by_name_returns_200(pokeapi):
     response = pokeapi.get_pokemon("pikachu")
@@ -54,4 +56,16 @@ def test_get_pokemons_by_name_returns_correct_ids(pokeapi, name, expected_id):
     assert response.status_code == 200
     body = response.json()
     assert body["id"] == expected_id
+
+
+def test_time_to_first_byte_get_pokemon_by_name(pokeapi):
+    response = pokeapi.get_pokemon("mew")
+
+    assert response.status_code == 200
+    elapsed = response.elapsed.total_seconds()
+    assert elapsed < MAX_RESPONSE_TIME_SECONDS, (
+        f"Ответ занял {elapsed} сек., допустимо до {MAX_RESPONSE_TIME_SECONDS} сек."
+    )
+
+
 

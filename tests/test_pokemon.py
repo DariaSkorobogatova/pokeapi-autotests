@@ -82,5 +82,15 @@ def test_get_pokemon_type_by_name(pokeapi, name, expected_type):
     assert expected_type in type_names
 
 
+@pytest.mark.parametrize("wrong_id", [0, -1, 5000, 99_999])
+def test_get_pokemon_by_invalid_id_returns_404(pokeapi, wrong_id):
+    response = pokeapi.get_pokemon(wrong_id)
+
+    assert response.status_code == 404
+    assert response.json()["message"] == "Not Found"
+
+
+
+
 
 

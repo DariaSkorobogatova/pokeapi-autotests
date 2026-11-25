@@ -90,6 +90,26 @@ def test_get_pokemon_by_invalid_id_returns_404(pokeapi, wrong_id):
     assert response.json()["message"] == "Not Found"
 
 
+def test_get_pokemon_list_returns_requested_number_of_results(pokeapi):
+    limit = 5
+
+    response = pokeapi.get_pokemon_list(limit=limit, offset=0)
+
+    assert response.status_code == 200
+    body = response.json()
+    assert len(body["results"]) == limit
+
+
+def test_get_pokemon_list_without_params_returns_default_number_of_results(pokeapi):
+    expected_default_limit = 20
+
+    response = pokeapi.get_pokemon_list()
+
+    assert response.status_code == 200
+    body = response.json()
+    assert len(body["results"]) == expected_default_limit
+
+
 
 
 

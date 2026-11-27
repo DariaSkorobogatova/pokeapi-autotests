@@ -123,6 +123,18 @@ def test_get_pokemon_list_offset_shifts_results(pokeapi):
     assert shifted_list[0] == full_list[shift]
 
 
+def test_get_pokemon_list_offset_24th_pokemon_is_pikachu(pokeapi):
+    shift = 24
+
+    response = pokeapi.get_pokemon_list(limit=1, offset=shift)
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["results"][0]["name"] == "pikachu"
+
+
+
+
 
 
 

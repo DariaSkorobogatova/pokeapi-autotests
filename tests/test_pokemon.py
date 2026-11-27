@@ -110,6 +110,21 @@ def test_get_pokemon_list_without_params_returns_default_number_of_results(pokea
     assert len(body["results"]) == expected_default_limit
 
 
+def test_get_pokemon_list_offset_shifts_results(pokeapi):
+    shift = 3
+
+    full_response = pokeapi.get_pokemon_list(limit=10, offset=0)
+    shifted_response = pokeapi.get_pokemon_list(limit=10, offset=shift)
+
+    assert full_response.status_code == 200
+    assert shifted_response.status_code == 200
+    full_list = full_response.json()["results"]
+    shifted_list = shifted_response.json()["results"]
+    assert shifted_list[0] == full_list[shift]
+
+
+
+
 
 
 

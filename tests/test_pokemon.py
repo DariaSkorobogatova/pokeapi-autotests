@@ -1,5 +1,6 @@
 """Тесты эндпоинта /pokemon/{name_or_id}."""
 import pytest
+from urllib.parse import urlparse, parse_qs
 from config import MAX_RESPONSE_TIME_SECONDS
 
 
@@ -133,6 +134,28 @@ def test_get_pokemon_list_offset_24th_pokemon_is_pikachu(pokeapi):
     assert body["results"][0]["name"] == "pikachu"
 
 
+def test_get_pokemon_list_first_page_has_no_previous(pokeapi):
+    offset = 0
+
+    response = pokeapi.get_pokemon_list(offset=offset)
+
+    assert response.status_code == 200
+    assert response.json()["previous"] is None
+
+
+def test_get_pokemon_list_next_points_to_following_page(pokeapi):
+    limit = 5
+    offset = 10
+
+    response = pokeapi.get_pokemon_list(limit=limit, offset=offset)
+
+    assert response.status_code == 200
+    next_url: str = response.json()["next"]
+    # parse_qs превращает query-параметры в словарь: {"offset": ["15"], "limit": ["5"]}
+    next_params = parse_qs(urlparse(next_url).query)
+    # значения приходят строками и в списках, поэтому сравниваем со списком из строки
+    assert next_params["offset"] == [str(offset + limit)]
+    assert next_params["limit"] == [str(limit)]
 
 
 
